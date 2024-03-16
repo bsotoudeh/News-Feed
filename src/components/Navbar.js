@@ -3,7 +3,7 @@ function Navbar() {
     <header className="border-b border-gray-300 p-6">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold font-black">News Feed</h1>
-        {/* <nav className="flex items-center w-auto">
+        <nav className="flex items-center w-auto">
           <ul className="text-base text-gray-700 flex justify-between">
             <li>
               <a
@@ -13,24 +13,8 @@ function Navbar() {
                 Home
               </a>
             </li>
-            <li>
-              <a
-                className="px-5 py-2 font-semibold hover:text-blue-700"
-                href="#"
-              >
-                About
-              </a>
-            </li>{" "}
-            <li>
-              <a
-                className="px-5 py-2 font-semibold hover:text-blue-700"
-                href="#"
-              >
-                Blog
-              </a>
-            </li>
           </ul>
-        </nav> */}
+        </nav>
       </div>
     </header>
   );
