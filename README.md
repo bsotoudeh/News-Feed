@@ -1,8 +1,8 @@
 # Getting Started
 
-Duplicate the .sample.env file in the project's root directory and change its name to .env.
-Ensure to generate unique API keys for the New York Times, News API, and Guardian News.
-Paste each API key into its designated location
+-Duplicate the .sample.env file in the project's root directory and change its name to .env.
+-Ensure to generate unique API keys for the New York Times, News API, and Guardian News.
+-Paste each API key into its designated location
 
 ### `yarn start`
 
