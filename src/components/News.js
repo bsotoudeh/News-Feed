@@ -1,5 +1,6 @@
 import "../App.css";
 import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
 function News(props) {
   const [loading, setLoading] = useState(true);
@@ -40,23 +41,23 @@ function News(props) {
                     <span className="font-semibold">Source:&nbsp;&nbsp;</span>
                     {post.source}
                   </p>
-                  <div className="flex items-center justify-between absolute bottom-0 left-5 right-5 text-gray-600 text-sm border-t-2 border-neutral-100 py-3 text-surface/75 dark:border-white/10 dark:text-neutral-300">
-                    <p className="truncate max-w-52">
+                  <div className="flex items-center justify-between text-nowrap absolute bottom-0 left-5 right-5 text-gray-600 text-sm border-t-2 border-neutral-100 py-3 text-surface/75 dark:border-white/10 dark:text-neutral-300">
+                    <p className="truncate">
                       <span className="font-semibold">Author:&nbsp;&nbsp;</span>
                       {post.byline || post.author}
                     </p>
-                    <p className="text-balance">
+                    <p>
                       <span className="font-semibold">
                         Published Date:&nbsp;&nbsp;
                       </span>
                       {post.publishedAt ||
                       post.webPublicationDate ||
                       post.published_date
-                        ? new Date(
+                        ? dayjs(
                             post.publishedAt ||
                               post.webPublicationDate ||
                               post.published_date
-                          ).toLocaleDateString()
+                          ).format("DD-MM-YYYY")
                         : "Date not available"}
                     </p>
                   </div>

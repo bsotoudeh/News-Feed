@@ -1,38 +1,14 @@
 import { useState, useEffect } from "react";
-import SearchNews from "./SearchNews";
-import FilterNews from "./FilterNews";
+import FilterSourceAuthors from "./FilterSourceAuthors";
+import FilterCategoryAuthorDate from "./FilterCategoryAuthorDate";
 import News from "./News";
 import dayjs from "dayjs";
 
 function NewsManager(props) {
   const [filteredData, setFilteredData] = useState(props.data);
 
-  const filterNewsFeedBySource = (filters) => {
-    if (!filters && filters.length === 0) {
-      setFilteredData(props.data);
-    } else {
-      const filteredResults = props.data.filter((item) => {
-        if (item.source && item.source.name) {
-          return filters.includes(item.source.name);
-        } else if (item.source) {
-          return filters.includes(item.source);
-        } else if (item.title && item.title !== "[Removed]") {
-          return item.title
-            .toLowerCase()
-            .trim()
-            .includes(filters.toLowerCase().trim());
-        } else if (item.webTitle) {
-          const regex = new RegExp(filters, "i");
-          return regex.test(item.webTitle);
-        }
-        return false;
-      });
-      setFilteredData(filteredResults);
-    }
-  };
-
-  const filterNewsFeedBySection = (filters) => {
-    if (!filters || filters === "All") {
+  const filterNews = (filters) => {
+    if (!filters) {
       setFilteredData(props.data);
       return;
     }
@@ -44,21 +20,31 @@ function NewsManager(props) {
 
       const formattedDate = dayjs(item.published_date).format("DD-MM-YYYY");
 
-      if (filters.includes(item.section) || filters.includes(item.pillarName)) {
+      if (item.section && filters.includes(item.section)) {
         return true;
       }
 
-      if (
-        item.author &&
-        item.author.toLowerCase().includes(filters.toLowerCase())
-      ) {
+      if (item.pillarName && item.pillarName.includes(filters)) {
         return true;
       }
 
-      if (
-        item.byline &&
-        item.byline.toLowerCase().includes(filters.toLowerCase())
-      ) {
+      if (item.author && item.author.includes(filters)) {
+        return true;
+      }
+
+      if (item.byline && item.byline.includes(filters)) {
+        return true;
+      }
+
+      if (item.source && Array.isArray(filters)) {
+        return filters.includes(item.source);
+      }
+
+      if (item.title && item.title.includes(filters)) {
+        return true;
+      }
+
+      if (item.webTitle && item.webTitle.includes(filters)) {
         return true;
       }
 
@@ -72,6 +58,10 @@ function NewsManager(props) {
     setFilteredData(filteredResults);
   };
 
+  const handleReset = () => {
+    setFilteredData(props.data);
+  };
+
   useEffect(() => {
     setFilteredData(filteredData);
   }, [filteredData]);
@@ -82,10 +72,16 @@ function NewsManager(props) {
   return (
     <div>
       <div>
-        <SearchNews handleSubmit={filterNewsFeedBySource} data={props.data} />
+        <FilterSourceAuthors
+          handleSubmit={filterNews}
+          handleReset={handleReset}
+        />
       </div>
       <div>
-        <FilterNews handleSubmit={filterNewsFeedBySection} data={props.data} />
+        <FilterCategoryAuthorDate
+          handleSubmit={filterNews}
+          handleReset={handleReset}
+        />
       </div>
       <div>
         <News data={filteredData} />

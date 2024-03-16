@@ -4,20 +4,23 @@ import NewsManager from "./components/NewsManager";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
+const {
+  REACT_APP_NY_TIMES_API_KEY,
+  REACT_APP_NEWS_API_KEY,
+  REACT_APP_GUARDIAN_API_KEY,
+  REACT_APP_NY_TIMES_URL,
+  REACT_APP_NEWS_API_URL,
+  REACT_APP_GUARDIAN_URL,
+} = process.env;
+
 function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     Promise.all([
-      axios.get(
-        "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=aqP3l9G1fBcjkW5nzbOtxlMjOCBa3zTs"
-      ),
-      axios.get(
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=e91863d95d6244aab0835fef06985d39"
-      ),
-      axios.get(
-        "https://content.guardianapis.com/search?tag=environment/recycling&api-key=271b5dc9-22c3-439d-85ea-4ee06a96b218"
-      ),
+      axios.get(`${REACT_APP_NY_TIMES_URL}${REACT_APP_NY_TIMES_API_KEY}`),
+      axios.get(`${REACT_APP_NEWS_API_URL}${REACT_APP_NEWS_API_KEY}`),
+      axios.get(`${REACT_APP_GUARDIAN_URL}${REACT_APP_GUARDIAN_API_KEY}`),
     ])
       .then(([nyTimesResponse, newsApiResponse, guardianapis]) => {
         const results1 = nyTimesResponse.data.results;

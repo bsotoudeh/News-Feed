@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-function SearchNews(props) {
+function FilterSourceAuthors(props) {
   const [filters, setFilters] = useState([]);
-  const [keywordsSearch, setKeywordsSearch] = useState("");
+  const [titleSearch, setTitleSearch] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (filters.length > 0) {
       props.handleSubmit(filters);
-    } else if (keywordsSearch.trim() !== "") {
-      props.handleSubmit(keywordsSearch);
+    } else if (titleSearch.trim() !== "") {
+      props.handleSubmit(titleSearch.trim());
     }
   };
 
@@ -21,9 +21,14 @@ function SearchNews(props) {
       setFilters(filters.filter((filter) => filter !== newValue));
     }
   };
+  const handleTitleSearch = (event) => {
+    setTitleSearch(event.target.value);
+  };
 
-  const handleKeywordsSearch = (event) => {
-    setKeywordsSearch(event.target.value);
+  const handleReset = () => {
+    setFilters([]);
+    setTitleSearch("");
+    props.handleReset();
   };
 
   return (
@@ -75,18 +80,28 @@ function SearchNews(props) {
           >
             Guardian News
           </label>
+          <label className="font-semibold mt-4">
+            Search by article's title:
+          </label>
           <input
             type="text"
-            placeholder="Search keywords..."
-            onChange={handleKeywordsSearch}
-            value={keywordsSearch}
-            className="shadow appearance-none border rounded px-4 py-2 my-4 lg:mx-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Search article's title..."
+            value={titleSearch}
+            onChange={handleTitleSearch}
+            className="shadow appearance-none border rounded px-4 py-2 lg:my-4 lg:mx-2 mb-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            className="bg-white hover:bg-blue-100 text-blue-500 font-bold py-2 px-4 rounded outline outline-2"
             type="submit"
           >
-            Filter Results
+            Filter
+          </button>
+          <button
+            className="bg-white hover:bg-blue-100 text-blue-500 font-bold py-2 px-4 rounded border ml-4"
+            type="button"
+            onClick={handleReset}
+          >
+            Reset
           </button>
         </div>
       </form>
@@ -94,4 +109,4 @@ function SearchNews(props) {
   );
 }
 
-export default SearchNews;
+export default FilterSourceAuthors;
