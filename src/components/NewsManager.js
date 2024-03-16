@@ -14,42 +14,56 @@ function NewsManager(props) {
     }
 
     const filteredResults = props.data.filter((item) => {
-      if (!item.published_date || !dayjs(item.published_date).isValid()) {
-        return false;
-      }
+      if (Array.isArray(filters)) {
+        if (item.source && item.source.includes(filters)) {
+          return true;
+        }
+      } else if (typeof filters === "string") {
+        if (!item.published_date || !dayjs(item.published_date).isValid()) {
+          return false;
+        }
 
-      const formattedDate = dayjs(item.published_date).format("DD-MM-YYYY");
+        const formattedDate = dayjs(item.published_date).format("DD-MM-YYYY");
 
-      if (item.section && filters.includes(item.section)) {
-        return true;
-      }
+        if (item.section && filters.includes(item.section)) {
+          return true;
+        }
 
-      if (item.pillarName && item.pillarName.includes(filters)) {
-        return true;
-      }
+        if (
+          item.pillarName &&
+          item.pillarName.toLowerCase().includes(filters.toLowerCase())
+        ) {
+          return true;
+        }
 
-      if (item.author && item.author.includes(filters)) {
-        return true;
-      }
+        if (
+          item.author &&
+          item.author.toLowerCase().includes(filters.toLowerCase())
+        ) {
+          return true;
+        }
 
-      if (item.byline && item.byline.includes(filters)) {
-        return true;
-      }
+        if (item.byline && item.byline.includes(filters)) {
+          return true;
+        }
 
-      if (item.source && Array.isArray(filters)) {
-        return filters.includes(item.source);
-      }
+        if (
+          item.title &&
+          item.title.toLowerCase().includes(filters.toLowerCase())
+        ) {
+          return true;
+        }
 
-      if (item.title && item.title.includes(filters)) {
-        return true;
-      }
+        if (
+          item.webTitle &&
+          item.webTitle.toLowerCase().includes(filters.toLowerCase())
+        ) {
+          return true;
+        }
 
-      if (item.webTitle && item.webTitle.includes(filters)) {
-        return true;
-      }
-
-      if (filters.includes(formattedDate)) {
-        return true;
+        if (filters.includes(formattedDate)) {
+          return true;
+        }
       }
 
       return false;
