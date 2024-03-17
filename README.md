@@ -1,10 +1,12 @@
 # Getting Started
 
--Duplicate the .sample.env file in the project's root directory and change its name to .env.
+-Duplicate the `.sample.env` file in the project's root directory and change its name to `.env.`
 
 -Ensure to generate unique API keys for the New York Times, News API, and Guardian News.
 
--Paste each API key into its designated location
+-Paste each API key into its designated location in the .env file.
+
+### `Docker Setup:`
 
 -docker build -t news-image:1.0 .
 
@@ -12,7 +14,10 @@
 
 -open a web browser and navigate to http://localhost:8080 to view the application.
 
-### `yarn start`
+### `Yarn Setup:`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-Run `yarn install` to install dependencies.
+
+-Start the application in development mode using yarn start.
+
+-The app will be accessible at http://localhost:3000 in your browser.
