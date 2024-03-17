@@ -6,6 +6,12 @@
 
 -Paste each API key into its designated location
 
+-docker build -t news-image:1.0 .
+
+-docker run -d -p 8080:80 news-image:1.0
+
+-open a web browser and navigate to http://localhost:8080 to view the application.
+
 ### `yarn start`
 
 Runs the app in the development mode.\
